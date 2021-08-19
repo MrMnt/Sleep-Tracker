@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.sleeptracker.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_addSleepDataFragment"
+            app:destination="@id/addSleepDataFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_sleepDataFragment"
+            app:destination="@id/sleepDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sleepDataFragment"
+        android:name="com.example.sleeptracker.SleepDataFragment"
+        android:label="fragment_sleep_data"
+        tools:layout="@layout/fragment_sleep_data" />
+    <fragment
+        android:id="@+id/addSleepDataFragment"
+        android:name="com.example.sleeptracker.AddSleepDataFragment"
+        android:label="fragment_add_sleep_data"
+        tools:layout="@layout/fragment_add_sleep_data" />
+</navigation>
