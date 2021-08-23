@@ -2,7 +2,14 @@ package com.example.sleeptracker;
 
 import android.util.Log;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Sleep {
 
@@ -11,6 +18,7 @@ public class Sleep {
     private Date startTime;
     private Date endTime;
     private long duration; // in seconds
+    private String sleepId; // document id in Firestore
 
     public Sleep(Date startTime, Date endTime){
         this.startTime = startTime;
@@ -45,5 +53,15 @@ public class Sleep {
     public String getDuration(){ return getDurationHours() + ":" + getDurationMinutes(); }
     public long getDurationHours(){ return duration / 3600; }
     public long getDurationMinutes(){ return (duration / 60) % 60; }
+
+    public Map<String, Object> convertForFirestore(){
+        Map<String, Object> sleep = new HashMap<>();
+
+        sleep.put("Start Time", startTime);
+        sleep.put("End time", endTime);
+        sleep.put("duration", duration);
+
+        return sleep;
+    }
 
 }

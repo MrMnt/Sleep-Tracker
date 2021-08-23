@@ -1,8 +1,9 @@
-package com.example.sleeptracker;
+package com.example.sleeptracker.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sleeptracker.R;
+import com.example.sleeptracker.Sleep;
 import com.example.sleeptracker.viemodels.AddSleepDataViewModel;
 
 public class AddSleepDataFragment extends Fragment {
@@ -55,6 +58,7 @@ public class AddSleepDataFragment extends Fragment {
         textSleepEnd = getView().findViewById(R.id.text_sleep_end_time);
         textSleepDuration = getView().findViewById(R.id.text_sleep_duration);
 
+        // Will not do anything else with these buttons so why bother creating their variables :).
         getView().findViewById(R.id.btn_set_sleep_start_time)
                 .setOnClickListener(v -> showTimePickerDialog(TimeListener.startTimeListener));
         getView().findViewById(R.id.btn_set_sleep_end_time)
@@ -64,6 +68,9 @@ public class AddSleepDataFragment extends Fragment {
                 .setOnClickListener(v -> showDatePickerDialog(DateListener.startDateListener));
         getView().findViewById(R.id.btn_set_sleep_end_date)
                 .setOnClickListener(v -> showDatePickerDialog(DateListener.endDateListener));
+
+        getView().findViewById(R.id.btn_save_sleep_data)
+                .setOnClickListener(v -> mViewModel.save());
     }
 
     private void showTimePickerDialog(TimeListener listener){

@@ -5,9 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.sleeptracker.DatePickerFragment;
+import com.example.sleeptracker.firebase.DatabaseHelper;
+import com.example.sleeptracker.ui.fragments.DatePickerFragment;
 import com.example.sleeptracker.Sleep;
-import com.example.sleeptracker.TimePickerFragment;
+import com.example.sleeptracker.ui.fragments.TimePickerFragment;
 
 import java.util.Calendar;
 
@@ -20,6 +21,8 @@ public class AddSleepDataViewModel extends ViewModel {
     private DatePickerFragment.MyDatePickerInterface startDateListener;
     private DatePickerFragment.MyDatePickerInterface endDateListener;
 
+    DatabaseHelper db = new DatabaseHelper();
+
     public AddSleepDataViewModel() {
         super();
         Log.d(TAG, "AddSleepDataViewModel: ");
@@ -30,6 +33,10 @@ public class AddSleepDataViewModel extends ViewModel {
         }
 
         initListeners();
+    }
+
+    public void save(){
+         db.addSleepData(newSleepData.getValue());
     }
 
     public MutableLiveData<Sleep> getNewSleepData() {

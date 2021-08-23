@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.sleeptracker.MainFragment"
+        android:name="com.example.sleeptracker.ui.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
@@ -18,12 +18,12 @@
     </fragment>
     <fragment
         android:id="@+id/sleepDataFragment"
-        android:name="com.example.sleeptracker.SleepDataFragment"
+        android:name="com.example.sleeptracker.ui.fragments.SleepDataFragment"
         android:label="fragment_sleep_data"
         tools:layout="@layout/fragment_sleep_data" />
     <fragment
         android:id="@+id/addSleepDataFragment"
-        android:name="com.example.sleeptracker.AddSleepDataFragment"
+        android:name="com.example.sleeptracker.ui.fragments.AddSleepDataFragment"
         android:label="fragment_add_sleep_data"
         tools:layout="@layout/fragment_add_sleep_data" />
 </navigation>

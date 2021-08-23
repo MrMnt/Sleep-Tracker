@@ -1,4 +1,4 @@
-package com.example.sleeptracker;
+package com.example.sleeptracker.ui.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
