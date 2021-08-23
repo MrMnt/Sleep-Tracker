@@ -18,7 +18,7 @@ public class Sleep {
     private Date startTime;
     private Date endTime;
     private long duration; // in seconds
-    private String sleepId; // document id in Firestore
+    private String docId; // document id in Firestore
 
     public Sleep(Date startTime, Date endTime){
         this.startTime = startTime;
@@ -28,6 +28,18 @@ public class Sleep {
     public Sleep(){
         this.startTime = new Date();
         this.endTime = new Date();
+        recalculateDuration();
+    }
+    // Firebase
+    public Sleep(DocumentSnapshot doc){
+        Map<String, Object> sleep = doc.getData();
+
+        this.docId = doc.getId();
+        Timestamp startTime = (Timestamp) sleep.get("Start Time");
+        this.startTime = startTime.toDate();
+        Timestamp endTime = (Timestamp) sleep.get("End time");
+        this.endTime =  endTime.toDate();
+
         recalculateDuration();
     }
 
