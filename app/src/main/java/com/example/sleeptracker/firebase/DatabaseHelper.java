@@ -22,7 +22,7 @@ public class DatabaseHelper {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // TODO change to have constants and get the actual userId.
-    DocumentReference userDocRef = db.document("users/user1");
+    DocumentReference userDocRef = db.document("users/" + user.getUid());
 
     public DatabaseHelper() {
         // Empty constructor.

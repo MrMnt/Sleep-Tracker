@@ -2,11 +2,10 @@ package com.example.sleeptracker.ui.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.sleeptracker.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthFragment extends Fragment {
 
@@ -22,6 +25,7 @@ public class AuthFragment extends Fragment {
 
     private EditText textEmail, textPassword;
     private Button btnSignIn, btnSignUp;
+    String email, password;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -47,10 +51,7 @@ public class AuthFragment extends Fragment {
 
     // All logic is in this view, since there is not much going on
     private void signUp(){
-        String email = textEmail.getText().toString();
-        String password = textPassword.getText().toString();
-
-        if(email.length() == 0 || password.length() == 0) return;
+        if(!getEmailAndPassword()) return;
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -65,11 +66,45 @@ public class AuthFragment extends Fragment {
     }
 
     private void signIn(){
+        if(!getEmailAndPassword()) return;
 
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            moveToMainFragment();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
     }
 
     private void moveToMainFragment(){
         Navigation.findNavController(getView()).navigate(R.id.action_authFragment_to_mainFragment);
     }
 
+    // TODO: Make sure they are properly formatted and handle the error
+    private boolean getEmailAndPassword(){
+        email = textEmail.getText().toString();
+        password = textPassword.getText().toString();
+
+        if(email.length() == 0 || password.length() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null) moveToMainFragment();
+    }
 }
