@@ -2,6 +2,7 @@ package com.example.sleeptracker;
 
 import android.util.Log;
 
+import com.example.sleeptracker.firebase.DbConstants;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,9 +36,9 @@ public class Sleep {
         Map<String, Object> sleep = doc.getData();
 
         this.docId = doc.getId();
-        Timestamp startTime = (Timestamp) sleep.get("Start Time");
+        Timestamp startTime = (Timestamp) sleep.get(DbConstants.SLEEP_FIELD_START_TIME);
         this.startTime = startTime.toDate();
-        Timestamp endTime = (Timestamp) sleep.get("End time");
+        Timestamp endTime = (Timestamp) sleep.get(DbConstants.SLEEP_FIELD_END_TIME);
         this.endTime =  endTime.toDate();
 
         recalculateDuration();
@@ -69,9 +70,9 @@ public class Sleep {
     public Map<String, Object> convertForFirestore(){
         Map<String, Object> sleep = new HashMap<>();
 
-        sleep.put("Start Time", startTime);
-        sleep.put("End time", endTime);
-        sleep.put("duration", duration);
+        sleep.put(DbConstants.SLEEP_FIELD_START_TIME, startTime);
+        sleep.put(DbConstants.SLEEP_FIELD_END_TIME, endTime);
+        sleep.put(DbConstants.SLEEP_FIELD_DURATION, duration);
 
         return sleep;
     }
