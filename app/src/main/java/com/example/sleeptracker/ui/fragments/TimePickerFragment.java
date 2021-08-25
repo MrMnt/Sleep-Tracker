@@ -13,14 +13,19 @@ import androidx.fragment.app.Fragment;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
 
     private static final String TAG = "TimePickerFragment";
+
+    // Currently chosen time by the user
+    private Date mDate;
     private MyTimePickerInterface mListener;
 
-    public TimePickerFragment(MyTimePickerInterface mListener) {
+    public TimePickerFragment(Date mDate, MyTimePickerInterface mListener) {
+        this.mDate = mDate;
         this.mListener = mListener;
     }
 
@@ -29,6 +34,7 @@ public class TimePickerFragment extends DialogFragment
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
         final Calendar c = Calendar.getInstance();
+        c.setTime(mDate);
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 

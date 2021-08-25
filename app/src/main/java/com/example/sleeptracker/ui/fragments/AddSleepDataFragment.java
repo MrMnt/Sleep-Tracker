@@ -24,7 +24,9 @@ public class AddSleepDataFragment extends Fragment {
     private TextView textSleepDuration;
 
     private AddSleepDataViewModel mViewModel;
+    private Sleep sleep;
 
+    // Makes specifying the listener easier :)
     private enum TimeListener{ startTimeListener, endTimeListener }
     private enum DateListener{ startDateListener, endDateListener }
 
@@ -43,7 +45,12 @@ public class AddSleepDataFragment extends Fragment {
     private void initModel(){
         mViewModel = new ViewModelProvider(requireActivity()).get(AddSleepDataViewModel.class);
 
-        mViewModel.getNewSleepData().observe(requireActivity(), newSleepData -> updateViews(newSleepData));
+        mViewModel.getNewSleepData().observe(requireActivity(), newSleepData -> updateSleepValue(newSleepData));
+    }
+
+    private void updateSleepValue(Sleep newSleepData){
+        sleep = newSleepData;
+        updateViews(sleep);
     }
 
     private void updateViews(Sleep newSleepData){
@@ -76,9 +83,9 @@ public class AddSleepDataFragment extends Fragment {
         DialogFragment newFragment = null;
 
         if(listener == TimeListener.startTimeListener){
-            newFragment = new TimePickerFragment(mViewModel.getStartTimeListener());
+            newFragment = new TimePickerFragment(sleep.getStartTime(), mViewModel.getStartTimeListener());
         } else if (listener == TimeListener.endTimeListener){
-            newFragment = new TimePickerFragment(mViewModel.getEndTimeListener());
+            newFragment = new TimePickerFragment(sleep.getEndTime(), mViewModel.getEndTimeListener());
         }
 
         newFragment.show(getActivity().getSupportFragmentManager(), "TimePicker");
@@ -88,9 +95,9 @@ public class AddSleepDataFragment extends Fragment {
         DialogFragment newFragment = null;
 
         if(listener == DateListener.startDateListener){
-            newFragment = new DatePickerFragment(mViewModel.getStartDateListener());
+            newFragment = new DatePickerFragment(sleep.getStartTime(), mViewModel.getStartDateListener());
         } else if (listener == DateListener.endDateListener){
-            newFragment = new DatePickerFragment(mViewModel.getEndDateListener());
+            newFragment = new DatePickerFragment(sleep.getEndTime(), mViewModel.getEndDateListener());
         }
 
         newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
