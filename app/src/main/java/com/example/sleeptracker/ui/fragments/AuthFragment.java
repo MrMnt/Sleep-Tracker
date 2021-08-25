@@ -25,7 +25,7 @@ public class AuthFragment extends Fragment {
 
     private EditText textEmail, textPassword;
     private Button btnSignIn, btnSignUp;
-    String email, password;
+    private String email, password;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -49,6 +49,23 @@ public class AuthFragment extends Fragment {
         btnSignUp.setOnClickListener(v -> signUp());
     }
 
+    // TODO: Make sure they are properly formatted and handle the error
+    private boolean getEmailAndPassword(){
+        email = textEmail.getText().toString();
+        password = textPassword.getText().toString();
+
+        if(email.length() == 0 || password.length() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void moveToMainFragment(){
+        Navigation.findNavController(getView()).navigate(R.id.action_authFragment_to_mainFragment);
+    }
+
+
     // All logic is in this view, since there is not much going on
     private void signUp(){
         if(!getEmailAndPassword()) return;
@@ -69,37 +86,19 @@ public class AuthFragment extends Fragment {
         if(!getEmailAndPassword()) return;
 
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            moveToMainFragment();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success");
+                        moveToMainFragment();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.getException());
                     }
                 });
     }
 
-    private void moveToMainFragment(){
-        Navigation.findNavController(getView()).navigate(R.id.action_authFragment_to_mainFragment);
-    }
-
-    // TODO: Make sure they are properly formatted and handle the error
-    private boolean getEmailAndPassword(){
-        email = textEmail.getText().toString();
-        password = textPassword.getText().toString();
-
-        if(email.length() == 0 || password.length() == 0) {
-            return false;
-        }
-
-        return true;
-    }
-
+    // If user is already signed in, no need to authenticate again.
     @Override
     public void onStart() {
         super.onStart();

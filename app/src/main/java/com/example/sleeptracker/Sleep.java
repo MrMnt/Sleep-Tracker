@@ -1,13 +1,9 @@
 package com.example.sleeptracker;
 
-import android.util.Log;
-
 import com.example.sleeptracker.firebase.DbConstants;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +12,9 @@ public class Sleep {
 
     private static final String TAG = "Sleep";
 
-    private Date startTime;
-    private Date endTime;
-    private long duration; // in seconds
+    private Date startTime;  // When the user fell asleep
+    private Date endTime;   // When the user woke up
+    private long duration; // Time slept in seconds
     private String docId; // document id in Firestore
 
     public Sleep(Date startTime, Date endTime){
@@ -31,11 +27,13 @@ public class Sleep {
         this.endTime = new Date();
         recalculateDuration();
     }
-    // Firebase
+
+    // Construct object from Firestore document
     public Sleep(DocumentSnapshot doc){
         Map<String, Object> sleep = doc.getData();
 
         this.docId = doc.getId();
+
         Timestamp startTime = (Timestamp) sleep.get(DbConstants.SLEEP_FIELD_START_TIME);
         this.startTime = startTime.toDate();
         Timestamp endTime = (Timestamp) sleep.get(DbConstants.SLEEP_FIELD_END_TIME);
@@ -51,7 +49,6 @@ public class Sleep {
         this.startTime = startTime;
         recalculateDuration();
     }
-
     public Date getEndTime() {
         return endTime;
     }
@@ -61,12 +58,16 @@ public class Sleep {
     }
 
     private void recalculateDuration(){
+        // Date.getTime() returns time in ms, we need just the seconds.
         duration = (endTime.getTime() - startTime.getTime()) / 1000;
     }
-    public String getDuration(){ return getDurationHours() + ":" + getDurationMinutes(); }
+    public String getDurationAsString(){
+        return getDurationHours() + ":" + getDurationMinutes();
+    }
     public long getDurationHours(){ return duration / 3600; }
     public long getDurationMinutes(){ return (duration / 60) % 60; }
 
+    // Converts this sleep obj to store it in the database
     public Map<String, Object> convertForFirestore(){
         Map<String, Object> sleep = new HashMap<>();
 

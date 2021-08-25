@@ -3,7 +3,6 @@ package com.example.sleeptracker.ui.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -50,7 +49,7 @@ public class AddSleepDataFragment extends Fragment {
     private void updateViews(Sleep newSleepData){
         textSleepStart.setText(newSleepData.getStartTime().toString());
         textSleepEnd.setText(newSleepData.getEndTime().toString());
-        textSleepDuration.setText(newSleepData.getDuration());
+        textSleepDuration.setText(newSleepData.getDurationAsString());
     }
 
     private void initViews(){

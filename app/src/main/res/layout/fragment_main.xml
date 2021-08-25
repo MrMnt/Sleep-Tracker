@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_add_sleep"
-        app:layout_constraintBottom_toTopOf="@+id/btn_view_sleep"
-        app:layout_constraintEnd_toEndOf="@+id/btn_view_sleep"
+        app:layout_constraintBottom_toTopOf="@+id/btn_view_sleeps"
+        app:layout_constraintEnd_toEndOf="@+id/btn_view_sleeps"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/btn_view_sleep"
+        app:layout_constraintStart_toStartOf="@+id/btn_view_sleeps"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_view_sleep"
+        android:id="@+id/btn_view_sleeps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_view_sleep"

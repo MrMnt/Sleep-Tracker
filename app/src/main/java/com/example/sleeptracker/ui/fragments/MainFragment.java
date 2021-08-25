@@ -3,6 +3,7 @@ package com.example.sleeptracker.ui.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,8 @@ import com.example.sleeptracker.R;
 public class MainFragment extends Fragment {
 
     private static final String TAG = "MainFragment";
+
+    private Button btnAddSleep, btnViewSleeps;
     
     public MainFragment() {
         super(R.layout.fragment_main);
@@ -27,16 +30,14 @@ public class MainFragment extends Fragment {
     }
 
     private void initButtons(){
-        // Add sleep data button
-        getView().findViewById(R.id.btn_add_sleep)
-                .setOnClickListener(v -> {
-                    Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_addSleepDataFragment);
-                });
+        btnAddSleep = getView().findViewById(R.id.btn_add_sleep);
+        btnAddSleep.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_addSleepDataFragment);
+        });
 
-        // View sleep data button
-        getView().findViewById(R.id.btn_view_sleep)
-                .setOnClickListener(v -> {
-                    Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_sleepDataFragment);
-                });
+        btnViewSleeps = getView().findViewById(R.id.btn_view_sleeps);
+        btnViewSleeps.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_sleepDataFragment);
+        });
     }
 }
