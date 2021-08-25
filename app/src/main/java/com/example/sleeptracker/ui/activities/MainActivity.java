@@ -2,6 +2,7 @@ package com.example.sleeptracker.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Bundle;
@@ -41,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // TODO: make sure user gets back to Authentication screen!
     private void signOut(){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user != null) mAuth.signOut();
+
+        NavController navController = Navigation.findNavController(this, R.id.fragment_container_view);
+        navController.navigate(R.id.action_global_authFragment);
     }
 }
