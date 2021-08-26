@@ -20,12 +20,12 @@ public class SleepDataViewModel extends ViewModel {
         }
     }
 
-    // TODO: load sleep data from Firestore
     private void loadSleepData() {
         everySleepData = db.getEverySleepData();
     }
 
     public MutableLiveData<List<Sleep>> getEverySleepData() {
+        loadSleepData();
         return everySleepData;
     }
 }

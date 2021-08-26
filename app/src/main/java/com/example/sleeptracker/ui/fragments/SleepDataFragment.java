@@ -45,10 +45,6 @@ public class SleepDataFragment extends Fragment {
 
     private void initViewModel() {
         mViewModel = new ViewModelProvider(requireActivity()).get(SleepDataViewModel.class);
-        // Hopefully the bug is here?
-        /* TODO: BUG if a user does not close the app and add more sleep data,
-            it is not being shown in the SleepDataFragment :(.
-         */
         mViewModel.getEverySleepData().observe(requireActivity(), sleepDataSet -> {
             ((SleepAdapter) mAdapter).updateSleepDataSet(sleepDataSet);
             // TODO: make notifying more performant
