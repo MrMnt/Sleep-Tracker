@@ -45,6 +45,9 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
     public SleepAdapter(List<Sleep> dataSet){
         sleepsData = dataSet;
     }
+    public void updateSleepDataSet(List<Sleep> dataSet) {
+        sleepsData = dataSet;
+    }
 
     // Create new views (invoked by the layout manager)
     @NonNull
