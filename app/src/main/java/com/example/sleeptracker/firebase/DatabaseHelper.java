@@ -26,6 +26,7 @@ public final class DatabaseHelper {
     private static DatabaseHelper helperInstance = new DatabaseHelper();
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    // TODO: BUG - make sure user gets updates when a change (sign out etc.) happens
     private FirebaseUser user = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference userDocRef = db.collection(DbConstants.COLL_USERS).document(user.getUid());
