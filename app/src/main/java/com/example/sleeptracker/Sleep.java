@@ -64,6 +64,10 @@ public class Sleep {
     public String getDurationAsString(){
         return getDurationHours() + ":" + getDurationMinutes();
     }
+    public String getDurationAsString2(){
+        //String hourText = (getDurationHours() == 0) ? "" : getDurationHours() + " hours";
+        return (getDurationHours() + "h " + getDurationMinutes() + "m");
+    }
     public long getDurationHours(){ return duration / 3600; }
     public long getDurationMinutes(){ return (duration / 60) % 60; }
 
