@@ -12,12 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sleeptracker.R;
-import com.example.sleeptracker.Sleep;
 import com.example.sleeptracker.SleepAdapter;
 import com.example.sleeptracker.viemodels.SleepDataViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SleepDataFragment extends Fragment {
     private static final String TAG = "SleepDataFragment";
@@ -47,8 +45,14 @@ public class SleepDataFragment extends Fragment {
 
     private void initViewModel() {
         mViewModel = new ViewModelProvider(requireActivity()).get(SleepDataViewModel.class);
-        mViewModel.getSleepsData().observe(requireActivity(), sleepsData -> {
-            ((SleepAdapter) mAdapter).updateSleepDataSet(sleepsData);
+        // Hopefully the bug is here?
+        /* TODO: BUG if a user does not close the app and add more sleep data,
+            it is not being shown in the SleepDataFragment :(.
+         */
+        mViewModel.getEverySleepData().observe(requireActivity(), sleepDataSet -> {
+            ((SleepAdapter) mAdapter).updateSleepDataSet(sleepDataSet);
+            // TODO: make notifying more performant
+            mAdapter.notifyDataSetChanged();
         });
     }
 

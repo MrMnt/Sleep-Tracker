@@ -4,31 +4,28 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sleeptracker.Sleep;
+import com.example.sleeptracker.firebase.DatabaseHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SleepDataViewModel extends ViewModel {
 
-    MutableLiveData<List<Sleep>> sleepsData;
+    private MutableLiveData<List<Sleep>> everySleepData;
+    private DatabaseHelper db = DatabaseHelper.getInstance();
 
     public SleepDataViewModel() {
-        if(sleepsData == null){
-            sleepsData = new MutableLiveData<>();
+        if(everySleepData == null){
+            everySleepData = new MutableLiveData<>();
             loadSleepData();
         }
     }
 
     // TODO: load sleep data from Firestore
     private void loadSleepData() {
-        List<Sleep> dummyData = new ArrayList<>();
-        for(int i = 0; i < 8; i++){
-            dummyData.add(new Sleep());
-        }
-        sleepsData.setValue(dummyData);
+        everySleepData = db.getEverySleepData();
     }
 
-    public MutableLiveData<List<Sleep>> getSleepsData(){
-        return sleepsData;
+    public MutableLiveData<List<Sleep>> getEverySleepData() {
+        return everySleepData;
     }
 }

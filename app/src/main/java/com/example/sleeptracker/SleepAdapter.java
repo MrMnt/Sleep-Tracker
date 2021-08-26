@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHolder> {
 
-    private List<Sleep> sleepsData;
+    private List<Sleep> sleepsDataSet;
 
     // Provide a reference to the type of views that you are using (custom ViewHolder).
     public static class SleepViewHolder extends RecyclerView.ViewHolder{
@@ -43,10 +43,10 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
 
     // Initialize the dataset of the Adapter.
     public SleepAdapter(List<Sleep> dataSet){
-        sleepsData = dataSet;
+        sleepsDataSet = dataSet;
     }
     public void updateSleepDataSet(List<Sleep> dataSet) {
-        sleepsData = dataSet;
+        sleepsDataSet = dataSet;
     }
 
     // Create new views (invoked by the layout manager)
@@ -66,7 +66,7 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
     public void onBindViewHolder(@NonNull SleepViewHolder holder, int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        Sleep sleep = sleepsData.get(position);
+        Sleep sleep = sleepsDataSet.get(position);
         holder.getTextDuration().setText(sleep.getDurationAsString2());
         holder.getTextStartTime().setText(sleep.getStartTime().toString());
         holder.getTextEndTime().setText(sleep.getEndTime().toString());
@@ -74,6 +74,6 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
 
     @Override
     public int getItemCount() {
-        return sleepsData.size();
+        return sleepsDataSet.size();
     }
 }
