@@ -1,5 +1,6 @@
 package com.example.sleeptracker.firebase;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.example.sleeptracker.Sleep;
@@ -9,18 +10,21 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class DatabaseHelper {
-
+public final class DatabaseHelper {
     private static final String TAG = "DatabaseHelper";
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser user = mAuth.getCurrentUser();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static DatabaseHelper helperInstance = new DatabaseHelper();
 
-    DocumentReference userDocRef = db.collection(DbConstants.COLL_USERS).document(user.getUid());
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user = mAuth.getCurrentUser();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference userDocRef = db.collection(DbConstants.COLL_USERS).document(user.getUid());
 
-    public DatabaseHelper() {
+    private DatabaseHelper() {
         // Empty constructor.
+    }
+    public static DatabaseHelper getInstance(){
+        return helperInstance;
     }
 
     public void addSleepData(Sleep sleep){

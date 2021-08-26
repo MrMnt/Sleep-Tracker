@@ -21,7 +21,7 @@ public class AddSleepDataViewModel extends ViewModel {
     private DatePickerFragment.MyDatePickerInterface startDateListener;
     private DatePickerFragment.MyDatePickerInterface endDateListener;
 
-    DatabaseHelper db = new DatabaseHelper();
+    DatabaseHelper db = DatabaseHelper.getInstance();
 
     public AddSleepDataViewModel() {
         super();
