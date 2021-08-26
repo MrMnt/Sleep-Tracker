@@ -1,6 +1,7 @@
 package com.example.sleeptracker.ui.fragments;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.sleeptracker.R;
+import com.example.sleeptracker.firebase.DatabaseHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -75,6 +77,7 @@ public class AuthFragment extends Fragment {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
+                        DatabaseHelper.getInstance().updateAuthData();
                         moveToMainFragment();
                     } else {
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -90,6 +93,7 @@ public class AuthFragment extends Fragment {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
+                        DatabaseHelper.getInstance().updateAuthData();
                         moveToMainFragment();
                     } else {
                         // If sign in fails, display a message to the user.
@@ -104,6 +108,9 @@ public class AuthFragment extends Fragment {
         super.onStart();
 
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null) moveToMainFragment();
+        if(user != null) {
+            DatabaseHelper.getInstance().updateAuthData();
+            moveToMainFragment();
+        }
     }
 }
