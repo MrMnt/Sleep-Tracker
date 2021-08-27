@@ -14,6 +14,9 @@ import com.example.sleeptracker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// TODO: add Toast (or any other kind) indicator when user
+//  Does something which would require a notification
+//  (confirmation that a sleep was added to the DB for example)
 public class MainActivity extends AppCompatActivity {
 
     @Override

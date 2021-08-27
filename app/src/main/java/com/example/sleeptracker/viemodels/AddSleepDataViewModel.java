@@ -15,6 +15,8 @@ import java.util.Calendar;
 public class AddSleepDataViewModel extends ViewModel {
     private static final String TAG = "AddSleepDataViewModel";
 
+    // TODO: save the start time to the database if a user
+    //  saves the time in the night and wants to continue in the morning.
     private MutableLiveData<Sleep> newSleepData;
     private TimePickerFragment.MyTimePickerInterface startTimeListener;
     private TimePickerFragment.MyTimePickerInterface endTimeListener;

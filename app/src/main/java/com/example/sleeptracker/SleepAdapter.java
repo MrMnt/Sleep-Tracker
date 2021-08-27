@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+// TODO: a user should be able to click on a card to change its properties
 public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHolder> {
 
     private List<Sleep> sleepsDataSet;
@@ -67,6 +68,7 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Sleep sleep = sleepsDataSet.get(position);
+        // TODO: make start/end times look better
         holder.getTextDuration().setText(sleep.getDurationAsString2());
         holder.getTextStartTime().setText(sleep.getStartTime().toString());
         holder.getTextEndTime().setText(sleep.getEndTime().toString());
