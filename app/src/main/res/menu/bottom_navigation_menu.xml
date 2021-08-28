@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/add_sleep_data_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_add_circle"
+        android:title="Add" />
+
+    <item
+        android:id="@+id/sleep_data_list_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_list_bulleted"
+        android:title="List" />
+
+    <item
+        android:id="@+id/sleep_data_chart_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_bar_chart_outlined"
+        android:title="Chart" />
+</menu>

@@ -5,18 +5,6 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/authFragment">
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.sleeptracker.ui.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main">
-        <action
-            android:id="@+id/action_mainFragment_to_addSleepDataFragment"
-            app:destination="@id/addSleepDataFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_sleepDataFragment"
-            app:destination="@id/sleepDataFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/sleepDataFragment"
         android:name="com.example.sleeptracker.ui.fragments.SleepDataFragment"
         android:label="fragment_sleep_data"
@@ -29,16 +17,17 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.example.sleeptracker.ui.fragments.AuthFragment"
-        android:label="AuthFragment" >
-        <action
-            android:id="@+id/action_authFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:label="AuthFragment" />
     <action
         android:id="@+id/action_global_authFragment"
         app:destination="@id/authFragment"
         app:popUpTo="@id/authFragment"
         app:popUpToInclusive="true" />
+    <action android:id="@+id/action_global_addSleepDataFragment" app:destination="@id/addSleepDataFragment" />
+    <action android:id="@+id/action_global_sleepDataFragment" app:destination="@id/sleepDataFragment" />
+    <fragment
+        android:id="@+id/sleepDataChartFragment"
+        android:name="com.example.sleeptracker.ui.fragments.SleepDataChartFragment"
+        android:label="SleepDataChartFragment" />
+    <action android:id="@+id/action_global_sleepDataChartFragment" app:destination="@id/sleepDataChartFragment" />
 </navigation>

@@ -64,7 +64,7 @@ public class AuthFragment extends Fragment {
     }
 
     private void moveToMainFragment(){
-        Navigation.findNavController(getView()).navigate(R.id.action_authFragment_to_mainFragment);
+        Navigation.findNavController(getView()).navigate(R.id.action_global_addSleepDataFragment);
     }
 
 
