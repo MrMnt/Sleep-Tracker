@@ -71,11 +71,8 @@ public class SleepAdapter extends RecyclerView.Adapter<SleepAdapter.SleepViewHol
         Sleep sleep = sleepsDataSet.get(position);
         holder.getTextDuration().setText(sleep.getDurationAsString2());
 
-        String pattern = "yyyy-MM-dd HH:mm";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
-        holder.getTextStartTime().setText(simpleDateFormat.format(sleep.getStartTime()));
-        holder.getTextEndTime().setText(simpleDateFormat.format(sleep.getEndTime()));
+        holder.getTextStartTime().setText(MyDateFormat.format(sleep.getStartTime()));
+        holder.getTextEndTime().setText(MyDateFormat.format(sleep.getEndTime()));
     }
 
     @Override

@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sleeptracker.MyDateFormat;
 import com.example.sleeptracker.R;
 import com.example.sleeptracker.Sleep;
 import com.example.sleeptracker.viemodels.AddSleepDataViewModel;
@@ -54,8 +55,8 @@ public class AddSleepDataFragment extends Fragment {
     }
 
     private void updateViews(Sleep newSleepData){
-        textSleepStart.setText(newSleepData.getStartTime().toString());
-        textSleepEnd.setText(newSleepData.getEndTime().toString());
+        textSleepStart.setText(MyDateFormat.format(newSleepData.getStartTime()));
+        textSleepEnd.setText(MyDateFormat.format(newSleepData.getEndTime()));
         textSleepDuration.setText(newSleepData.getDurationAsString());
     }
 
