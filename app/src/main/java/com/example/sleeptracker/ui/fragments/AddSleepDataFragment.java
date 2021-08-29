@@ -55,8 +55,8 @@ public class AddSleepDataFragment extends Fragment {
     }
 
     private void updateViews(Sleep newSleepData){
-        textSleepStart.setText(MyDateFormat.format(newSleepData.getStartTime()));
-        textSleepEnd.setText(MyDateFormat.format(newSleepData.getEndTime()));
+        textSleepStart.setText(MyDateFormat.format1(newSleepData.getStartTime()));
+        textSleepEnd.setText(MyDateFormat.format1(newSleepData.getEndTime()));
         textSleepDuration.setText(newSleepData.getDurationAsString());
     }
 

@@ -5,10 +5,13 @@ import java.util.Date;
 
 public class MyDateFormat {
 
-    private static String pattern = "yyyy-MM-dd     HH:mm";
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    private static String pattern1 = "yyyy-MM-dd     HH:mm";
+    private static String pattern2 = "yyyy-MM-dd";
 
-    public static String format(Date date){
-        return simpleDateFormat.format(date);
+    public static String format1(Date date) {
+        return new SimpleDateFormat(pattern1).format(date);
+    }
+    public static String format2(Date date) {
+        return new SimpleDateFormat(pattern2).format(date);
     }
 }

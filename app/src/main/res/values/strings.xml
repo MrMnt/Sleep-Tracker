@@ -11,4 +11,5 @@
     <string name="fell_asleep">Fell asleep:</string>
     <string name="duration">Duration:</string>
     <string name="woke_up">Woke up:</string>
+    <string name="show_sleep_data">Show Sleep Data</string>
 </resources>

@@ -3,19 +3,23 @@ package com.example.sleeptracker.ui.fragments;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sleeptracker.MyDateFormat;
 import com.example.sleeptracker.R;
 import com.example.sleeptracker.SleepAdapter;
 import com.example.sleeptracker.viemodels.SleepDataViewModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SleepDataFragment extends Fragment {
     private static final String TAG = "SleepDataFragment";
@@ -25,35 +29,63 @@ public class SleepDataFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private SleepDataViewModel mViewModel;
+    private Button btnQueryStartDate, btnQueryEndDate, btnShowQueryResults;
+    private Date queryStartDate, queryEndDate;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        init();
+        initViews();
         initViewModel();
+        initButtons();
     }
 
-    private void init(){
+    private void initViews(){
         mAdapter = new SleepAdapter(new ArrayList<>());
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView = getView().findViewById(R.id.recycler_view_sleep_data);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        btnQueryStartDate = getView().findViewById(R.id.btn_query_start_date);
+        btnQueryEndDate = getView().findViewById(R.id.btn_query_end_date);
+        btnShowQueryResults = getView().findViewById(R.id.btn_show_query_results);
+    }
+
+    private void initButtons(){
+        btnQueryStartDate.setOnClickListener(v -> {
+            DialogFragment newFragment = new DatePickerFragment(queryStartDate, mViewModel.getStartDateListener());
+            newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
+        });
+        btnQueryEndDate.setOnClickListener(v -> {
+            DialogFragment newFragment = new DatePickerFragment(queryEndDate, mViewModel.getEndDateListener());
+            newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
+        });
+        btnShowQueryResults.setOnClickListener(v -> initViewModel());
     }
 
     private void initViewModel() {
         mViewModel = new ViewModelProvider(requireActivity()).get(SleepDataViewModel.class);
-        mViewModel.getEverySleepData().observe(requireActivity(), sleepDataSet -> {
+        mViewModel.getQueriedSleepData().observe(requireActivity(), sleepDataSet -> {
             ((SleepAdapter) mAdapter).updateSleepDataSet(sleepDataSet);
             // TODO: make notifying more performant
             mAdapter.notifyDataSetChanged();
         });
+
+        mViewModel.getQueryStartDate().observe(requireActivity(), startDate -> {
+            queryStartDate = startDate;
+            btnQueryStartDate.setText(MyDateFormat.format2(startDate));
+        });
+        mViewModel.getQueryEndDate().observe(requireActivity(), endDate -> {
+            queryEndDate = endDate;
+            btnQueryEndDate.setText(MyDateFormat.format2(endDate));
+        });
     }
 
     public SleepDataFragment () {
-        super(R.layout.fragment_sleep_data);
+        super(R.layout.fragment_sleep_data_list);
         Log.d(TAG, "SleepDataFragment: ");
     }
 }

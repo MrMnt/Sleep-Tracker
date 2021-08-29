@@ -1,23 +1,19 @@
 package com.example.sleeptracker.firebase;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sleeptracker.Sleep;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public final class DatabaseHelper {
@@ -29,6 +25,8 @@ public final class DatabaseHelper {
     private FirebaseUser user = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference userDocRef = db.collection(DbConstants.COLL_USERS).document(user.getUid());
+
+    private Query mQuery;
 
     private DatabaseHelper() {
         // Empty constructor.
@@ -47,40 +45,29 @@ public final class DatabaseHelper {
             });
     }
 
-    public void getSleepData(String docId){
-        userDocRef.collection(DbConstants.COLL_SLEEPS).document(docId).get()
-            .addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        Sleep a = new Sleep(document);
-                    } else {
-                        Log.d(TAG, "No such document");
-                    }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            });
-    }
-    public MutableLiveData<List<Sleep>> getEverySleepData(){
+    public MutableLiveData<List<Sleep>> getQueriedSleepData(){
         MutableLiveData<List<Sleep>> sleepsLiveData = new MutableLiveData<>();
-        List<Sleep> sleepsData = new ArrayList<>();
+        List<Sleep> sleepQueryResult = new ArrayList<>();
 
-        userDocRef.collection(DbConstants.COLL_SLEEPS).get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        for(QueryDocumentSnapshot document : task.getResult()){
-                            Sleep s = new Sleep(document);
-                            sleepsData.add(s);
-                        }
-                        sleepsLiveData.setValue(sleepsData);
-                    } else {
-                        Log.d(TAG, "Error getting documents", task.getException());
-                    }
-                });
+        mQuery.get().addOnCompleteListener(task -> {
+           if(task.isSuccessful()){
+               for(QueryDocumentSnapshot document : task.getResult()){
+                   sleepQueryResult.add(new Sleep(document));
+               }
+               sleepsLiveData.setValue(sleepQueryResult);
+           } else {
+               Log.d(TAG, "getQueriedSleepData: ", task.getException());
+           }
+        });
 
         return sleepsLiveData;
+    }
+
+    public void setQuery(Date startDate, Date endDate, long limit){
+        mQuery = userDocRef.collection(DbConstants.COLL_SLEEPS);
+        mQuery = mQuery.whereGreaterThanOrEqualTo(DbConstants.SLEEP_FIELD_START_TIME, startDate);
+        mQuery = mQuery.whereLessThanOrEqualTo(DbConstants.SLEEP_FIELD_START_TIME, endDate);
+        mQuery = mQuery.limit(limit);
     }
 
     public void updateAuthData(){

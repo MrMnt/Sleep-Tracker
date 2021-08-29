@@ -8,7 +8,7 @@
         android:id="@+id/sleepDataFragment"
         android:name="com.example.sleeptracker.ui.fragments.SleepDataFragment"
         android:label="fragment_sleep_data"
-        tools:layout="@layout/fragment_sleep_data" />
+        tools:layout="@layout/fragment_sleep_data_list" />
     <fragment
         android:id="@+id/addSleepDataFragment"
         android:name="com.example.sleeptracker.ui.fragments.AddSleepDataFragment"
