@@ -29,7 +29,7 @@ public class SleepDataFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private SleepDataViewModel mViewModel;
-    private Button btnQueryStartDate, btnQueryEndDate, btnShowQueryResults;
+    private Button btnQueryStartDate, btnQueryEndDate;
     private Date queryStartDate, queryEndDate;
 
     @Override
@@ -51,7 +51,6 @@ public class SleepDataFragment extends Fragment {
 
         btnQueryStartDate = getView().findViewById(R.id.btn_query_start_date);
         btnQueryEndDate = getView().findViewById(R.id.btn_query_end_date);
-        btnShowQueryResults = getView().findViewById(R.id.btn_show_query_results);
     }
 
     private void initButtons(){
@@ -63,7 +62,6 @@ public class SleepDataFragment extends Fragment {
             DialogFragment newFragment = new DatePickerFragment(queryEndDate, mViewModel.getEndDateListener());
             newFragment.show(getActivity().getSupportFragmentManager(), "DatePicker");
         });
-        btnShowQueryResults.setOnClickListener(v -> initViewModel());
     }
 
     private void initViewModel() {

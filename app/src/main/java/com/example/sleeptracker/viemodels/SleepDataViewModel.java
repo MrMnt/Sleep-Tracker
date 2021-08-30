@@ -18,6 +18,7 @@ public class SleepDataViewModel extends ViewModel {
 
     private MutableLiveData<Date> queryStartDate = new MutableLiveData<>();
     private MutableLiveData<Date> queryEndDate = new MutableLiveData<>();
+
     private DatePickerFragment.MyDatePickerInterface startDateListener;
     private DatePickerFragment.MyDatePickerInterface endDateListener;
 
@@ -95,6 +96,6 @@ public class SleepDataViewModel extends ViewModel {
     }
 
     private void updateDbQuery(){
-        db.setQuery(queryStartDate.getValue(), queryEndDate.getValue(), 20);
+        db.updateQuery(queryStartDate.getValue(), queryEndDate.getValue(), 20);
     }
 }

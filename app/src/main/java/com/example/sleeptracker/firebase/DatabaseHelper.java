@@ -27,6 +27,7 @@ public final class DatabaseHelper {
     private DocumentReference userDocRef = db.collection(DbConstants.COLL_USERS).document(user.getUid());
 
     private Query mQuery;
+    private MutableLiveData<List<Sleep>> sleepsLiveData = new MutableLiveData<>();
 
     private DatabaseHelper() {
         // Empty constructor.
@@ -46,7 +47,6 @@ public final class DatabaseHelper {
     }
 
     public MutableLiveData<List<Sleep>> getQueriedSleepData(){
-        MutableLiveData<List<Sleep>> sleepsLiveData = new MutableLiveData<>();
         List<Sleep> sleepQueryResult = new ArrayList<>();
 
         mQuery.get().addOnCompleteListener(task -> {
@@ -63,11 +63,13 @@ public final class DatabaseHelper {
         return sleepsLiveData;
     }
 
-    public void setQuery(Date startDate, Date endDate, long limit){
+    public void updateQuery(Date startDate, Date endDate, long limit){
         mQuery = userDocRef.collection(DbConstants.COLL_SLEEPS);
         mQuery = mQuery.whereGreaterThanOrEqualTo(DbConstants.SLEEP_FIELD_START_TIME, startDate);
         mQuery = mQuery.whereLessThanOrEqualTo(DbConstants.SLEEP_FIELD_START_TIME, endDate);
         mQuery = mQuery.limit(limit);
+
+        getQueriedSleepData();
     }
 
     public void updateAuthData(){
