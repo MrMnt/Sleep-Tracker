@@ -21,7 +21,7 @@ import com.example.sleeptracker.viemodels.SleepDataViewModel;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SleepDataFragment extends Fragment {
+public class SleepDataListFragment extends Fragment {
     private static final String TAG = "SleepDataFragment";
 
     private RecyclerView mRecyclerView;
@@ -82,7 +82,7 @@ public class SleepDataFragment extends Fragment {
         });
     }
 
-    public SleepDataFragment () {
+    public SleepDataListFragment() {
         super(R.layout.fragment_sleep_data_list);
         Log.d(TAG, "SleepDataFragment: ");
     }

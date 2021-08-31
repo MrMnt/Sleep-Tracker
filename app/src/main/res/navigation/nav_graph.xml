@@ -6,7 +6,7 @@
     app:startDestination="@id/authFragment">
     <fragment
         android:id="@+id/sleepDataFragment"
-        android:name="com.example.sleeptracker.ui.fragments.SleepDataFragment"
+        android:name="com.example.sleeptracker.ui.fragments.SleepDataListFragment"
         android:label="fragment_sleep_data"
         tools:layout="@layout/fragment_sleep_data_list" />
     <fragment
